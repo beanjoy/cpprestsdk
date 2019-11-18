@@ -345,19 +345,19 @@ inline size_t count_utf8_to_utf16(const std::string& s)
 
         if ((c & BIT7) == 0)
         {
-            throw std::range_error("UTF-8 string character can never start with 10xxxxxx");
+            // throw std::range_error("UTF-8 string character can never start with 10xxxxxx");
         }
         else if ((c & BIT6) == 0) // 2 byte character, 0x80 to 0x7FF
         {
             if (index == sSize)
             {
-                throw std::range_error("UTF-8 string is missing bytes in character");
+				// throw std::range_error("UTF-8 string is missing bytes in character");
             }
 
             const UtilCharInternal_t c2 {sData[index++]};
             if ((c2 & 0xC0) != BIT8)
             {
-                throw std::range_error("UTF-8 continuation byte is missing leading bit mask");
+				// throw std::range_error("UTF-8 continuation byte is missing leading bit mask");
             }
 
             // can't require surrogates for 7FF
@@ -367,14 +367,14 @@ inline size_t count_utf8_to_utf16(const std::string& s)
         {
             if (sSize - index < 2)
             {
-                throw std::range_error("UTF-8 string is missing bytes in character");
+				// throw std::range_error("UTF-8 string is missing bytes in character");
             }
 
             const UtilCharInternal_t c2 {sData[index++]};
             const UtilCharInternal_t c3 {sData[index++]};
             if (((c2 | c3) & 0xC0) != BIT8)
             {
-                throw std::range_error("UTF-8 continuation byte is missing leading bit mask");
+				// throw std::range_error("UTF-8 continuation byte is missing leading bit mask");
             }
 
             result -= 2;
@@ -383,7 +383,7 @@ inline size_t count_utf8_to_utf16(const std::string& s)
         {
             if (sSize - index < 3)
             {
-                throw std::range_error("UTF-8 string is missing bytes in character");
+				// throw std::range_error("UTF-8 string is missing bytes in character");
             }
 
             const UtilCharInternal_t c2 {sData[index++]};
@@ -391,7 +391,7 @@ inline size_t count_utf8_to_utf16(const std::string& s)
             const UtilCharInternal_t c4 {sData[index++]};
             if (((c2 | c3 | c4) & 0xC0) != BIT8)
             {
-                throw std::range_error("UTF-8 continuation byte is missing leading bit mask");
+				// throw std::range_error("UTF-8 continuation byte is missing leading bit mask");
             }
 
             const uint32_t codePoint =
@@ -400,7 +400,7 @@ inline size_t count_utf8_to_utf16(const std::string& s)
         }
         else
         {
-            throw std::range_error("UTF-8 string has invalid Unicode code point");
+			// throw std::range_error("UTF-8 string has invalid Unicode code point");
         }
     }
 
